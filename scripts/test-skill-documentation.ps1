@@ -29,7 +29,7 @@ function Assert-FileContains {
     }
 }
 
-Assert-FileContains -Path $skillPath -Pattern '(?m)^name: publishing-harmonyos-appgallery-skill$' -Description 'stable Skill name'
+Assert-FileContains -Path $skillPath -Pattern '(?m)^name: publishing-harmonyos-appgallery-skill\r?$' -Description 'stable Skill name'
 Assert-FileContains -Path $skillPath -Pattern '(?m)^description: Use when ' -Description 'trigger-only description'
 Assert-FileContains -Path $skillPath -Pattern 'appgallery-form-checklist\.md' -Description 'main Skill link to the field checklist'
 
