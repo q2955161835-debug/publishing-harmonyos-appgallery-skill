@@ -1,6 +1,6 @@
 interface:
   display_name: "HarmonyOS AppGallery 发布"
-  short_description: "安全完成 HarmonyOS 签名、验包、上架与审核提交"
-  default_prompt: "Use $publishing-harmonyos-appgallery-skill to prepare and verify a HarmonyOS AppGallery release through the final submission gate."
+  short_description: "核对 HarmonyOS 签名、素材、隐私合规与审核提交"
+  default_prompt: "Use $publishing-harmonyos-appgallery-skill to prepare and verify a complete HarmonyOS AppGallery release, including listing assets, privacy and compliance fields, through the final submission gate."
 policy:
   allow_implicit_invocation: true

@@ -1,17 +1,22 @@
 ---
 name: publishing-harmonyos-appgallery-skill
-description: Use when preparing, signing, verifying, uploading, self-checking, selecting, or submitting a HarmonyOS application through AppGallery Connect, especially for signed APP packages, release certificates and Profiles, Hvigor assembleApp errors, privacy forms, or review submission.
+description: Use when preparing or releasing a HarmonyOS app through AppGallery Connect, including release signing, APP verification, store icons or screenshots, localization, privacy forms, content rating, copyright or APP filing, package upload, self-check, version selection, or review submission.
 ---
 
 # Publishing HarmonyOS on AppGallery
 
 ## Overview
 
-Build one evidence chain from accepted commit to verified `.app`, matching portal record, and explicit submission. Current state is evidence; memory is not.
+Build one evidence chain from an accepted commit to a verified signed `.app`, complete persisted store metadata, the matching portal record, and an explicitly authorized submission. Current files and current portal state are evidence; memory and a successful click are not.
 
 ## Required resources
 
-Read both references completely. The verifier lives under this Skill at `scripts/verify-release-package.ps1`.
+Read these completely before editing AppGallery fields:
+
+- `references/release-workflow.md` for the ordered release and authorization gates.
+- `references/appgallery-form-checklist.md` for every application-information, material, privacy, compliance, and version field.
+
+Use `references/troubleshooting.md` when a build, upload, form, self-check, or persistence check fails. The verifier lives at `scripts/verify-release-package.ps1`.
 
 For Chrome, **REQUIRED SUB-SKILL:** use `chrome:control-chrome`. For DevEco Studio or native dialogs, use `computer-use:computer-use` when available.
 
@@ -21,10 +26,11 @@ For Chrome, **REQUIRED SUB-SKILL:** use `chrome:control-chrome`. For DevEco Stud
 | --- | --- |
 | Source/signing | Accepted commit and tests; release certificate/Profile match Bundle Name; secrets remain local |
 | Package | Project-level `assembleApp` succeeds; `.app` passes digest, signature, Profile, metadata, size, and SHA-256 checks |
-| Store basics | `应用信息` is saved and reloaded with an icon for every supported device tab, exactly one category, at least one tag, and a category-related main tag |
-| Portal/submission | Parsed identity and report match this upload; user authorizes `提交审核` at action time |
+| Application information | Every configured language and material device group has the required name/icon; category, labels, main label, and developer-service fields are saved and reloaded |
+| Version information | Exact package, regions, listing copy/assets, rating, privacy, AI, copyright/filing, review information/contact, and launch time are `PASS` or evidence-backed `N/A` |
+| Portal/submission | Package legality permits submission; self-check result or explicit skip-risk decision is recorded; user authorizes `提交审核` at action time |
 
-Do not cross a failed gate. Warnings are recorded and classified; they do not replace a successful build or verification result.
+Do not cross a failed gate. Huawei describes upper-store self-check as recommended: `待优化` may still permit submission when legality passes, but the risk must be shown and explicitly accepted; never relabel it `通过`.
 
 ## Exact command and error map
 
@@ -37,34 +43,35 @@ pwsh -NoProfile -File '<skill-dir>\scripts\verify-release-package.ps1' -PackageP
 Do not invent `buildMode` or other flags; change parameters only when current project configuration proves they are required.
 
 - `00306054 ... assembleApp task not found`: module mode was used for a project task; rerun project-level `assembleApp`.
-- `11014007 Key alias password error`: the alias/keystore password is wrong; the user re-enters it locally. It is not a platform version conflict.
+- `11014007 Key alias password error`: the alias/keystore password is wrong; the user re-enters it locally.
 - Verification passes only with exit code 0, `verify-app success`, `Digest verify result: true`, and `verify-profile success`.
 
 ## Workflow
 
-1. Inspect repository rules, Git/acceptance evidence, release identity, scope, and AppGallery state; then finish validation and checkpoint.
+1. Inspect repository rules, Git/acceptance evidence, release identity, current official requirements, and current AppGallery state; create a rollback checkpoint.
 2. Prepare matching release certificate/Profile and local signing without exposing secrets or committing machine data.
-3. Build and verify the signed `.app` using the exact map above; compare metadata with source.
-4. Open `应用信息` before the version page. For every checked supported-device tab, upload and preview the matching icon; select exactly one category; select at least one tag; set a category-related main tag; click `保存`; reload and verify all four items persisted.
-5. Complete the remaining listing, rating, privacy, regions, pricing, declarations, screenshots, and reviewer contact truthfully. Audit both `应用信息` and `准备提交`; never infer that one page covers the other.
-6. Upload for `测试和正式上架`, confirm parsing, and match self-check report ID/time to this upload.
-7. Use `准备提交` → `版本选取` → choose exact `.app` → `确认选取` → encryption setting → `保存`.
-8. Run the portal preflight in `references/release-workflow.md`; do not present a submission summary while any mandatory row is empty or unsaved.
-9. Present the submission summary and stop before `提交审核` until action-time confirmation.
-10. Distinguish `已提交审核`, `审核通过`, and `已上架`; later manual go-live needs new confirmation.
+3. Build and independently verify the signed `.app`; compare `pack.info`, source configuration, release plan, bytes, and SHA-256.
+4. Complete `应用信息` first. Loop through every configured language and every official material device group, not raw package device names; save and reload all fields.
+5. Upload the exact verified `.app` for `测试和正式上架`, read the parsed record and legality result, then run or explicitly decide about the recommended self-check.
+6. Select that exact package in the version, set encryption, and complete every applicable row in `references/appgallery-form-checklist.md` truthfully.
+7. Audit `应用信息` and `版本信息/准备提交` separately. A preview, green check, validation result, or save toast alone is insufficient; reload and re-read persisted values and assets.
+8. Produce a field-status preflight. Any required `UNKNOWN`, `BLOCKED`, empty, stale, or unsaved row prevents a final submission summary.
+9. Present the exact submission summary and stop before `提交审核` until the user authorizes that version at action time.
+10. After submission, distinguish `预审中/审核中`, `审核通过`, `待上架`, and `已上架`; manual release or re-submission needs new authorization.
 
 ## Human-only inputs
 
-The user enters passwords, OTPs, and CAPTCHAs locally and accepts legal attestations. Never paste them into chat, scripts, Git, logs, screenshots, or docs.
+The user enters passwords, test-account secrets, OTPs, and CAPTCHAs locally and accepts legal attestations. Never paste them into chat, scripts, Git, logs, screenshots, acceptance records, or progress documents.
 
 ## Handoff contract
 
-Report commit, Bundle Name, version/build, path/bytes/SHA-256, verification, upload/report identity, regions, state, warnings, and pending authorization.
+Report commit, Bundle Name, version/build, package path/bytes/SHA-256, verification, portal package/upload/report identity, all form statuses, regions, current state, warnings, explicit `N/A` reasons, and pending authorization.
 
 ## Common mistakes
 
-- `BUILD SUCCESSFUL` is not independent release proof; `.hap` is not the store package.
-- Match self-check reports to the exact upload.
-- Do not start on `准备提交` and overlook `应用信息`: icon, category, tags, and main tag are separate saved requirements.
-- A preview alone is not evidence of persistence; save, reload, and re-read every supported-device tab.
-- “继续” does not authorize `提交审核` or later go-live.
+- `.hap` is not the store package; `BUILD SUCCESSFUL` is not independent release proof.
+- Phone and tablet currently share the official `手机/平板` material tab; do not invent separate uploads, but verify the current portal mapping.
+- Screenshots are acceptance evidence: inspect the real rendered frames before upload, then verify count, orientation, dimensions, persistence, and ordering.
+- Privacy permission explanation, privacy policy/rights URLs, and privacy labels are different fields; completing one does not complete the others.
+- A custom privacy URL that returns 404, redirects to unrelated content, or contradicts the app is not valid evidence.
+- “继续”, upload authorization, or a saved draft does not authorize `提交审核` or later manual release.
