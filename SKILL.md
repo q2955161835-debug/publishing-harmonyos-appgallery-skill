@@ -77,6 +77,7 @@ Report commit, Bundle Name, version/build, package path/bytes/SHA-256, verificat
 - Privacy permission explanation, privacy policy/rights URLs, and privacy labels are different fields; completing one does not complete the others.
 - A custom privacy URL that returns 404, redirects to unrelated content, or contradicts the app is not valid evidence.
 - A locally fixed APP does not prove AppGallery reviewed or selected it; re-read the selected package row and bind any audit report to that exact file and upload time.
+- A current selected-package row is not immutable history; if the version may have changed after rejection, require the report, a submission snapshot, or another immutable platform record.
 - A slogan that fits the character limit is not automatically a complete one-sentence introduction; state the real user action or outcome.
 - Reviewer notes or a demo video may explain reachable functionality, but cannot substitute for real product value or a normally usable release build.
 - “继续”, upload authorization, or a saved draft does not authorize `提交审核` or later manual release.

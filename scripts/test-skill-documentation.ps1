@@ -40,6 +40,8 @@ Assert-FileContains -Path $workflowPath -Pattern '素材设备组' -Description 
 Assert-FileContains -Path $workflowPath -Pattern '上架自检.*推荐' -Description 'official self-check semantics'
 Assert-FileContains -Path $workflowPath -Pattern '审核报告身份' -Description 'review report identity gate'
 Assert-FileContains -Path $workflowPath -Pattern '被审核软件包' -Description 'audited package binding'
+Assert-FileContains -Path $workflowPath -Pattern '不可变.*记录|提交.*快照|提交快照' -Description 'immutable audited package evidence'
+Assert-FileContains -Path $workflowPath -Pattern '无法.*唯一.*证明.*(UNKNOWN|BLOCKED)|无法.*(UNKNOWN|BLOCKED).*重提摘要' -Description 'unknown audited package fail-closed gate'
 Assert-FileContains -Path $workflowPath -Pattern '驳回问题矩阵' -Description 'review rejection remediation matrix'
 Assert-FileContains -Path $workflowPath -Pattern '重新提交.*授权|授权.*重新提交' -Description 'resubmission authorization gate'
 
