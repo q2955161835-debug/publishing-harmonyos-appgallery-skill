@@ -89,4 +89,4 @@
 - 预期结果：关键字段与官方链接存在，无空白错误，全部脚本可解析。
 - 验证命令：`pwsh -NoProfile -File .\scripts\test-skill-documentation.ps1`；`git diff --check`；PowerShell Parser 遍历 `scripts/*.ps1`。
 
-最近验收：2026-08-10，独立子 agent L3 结论为 `通过`。
+最近验收：2026-08-11，独立子 Agent L3 复验结论为 `通过`。
