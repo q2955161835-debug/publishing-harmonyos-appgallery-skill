@@ -1,6 +1,6 @@
 interface:
-  display_name: "HarmonyOS AppGallery 发布"
-  short_description: "核对 HarmonyOS 发布、审核驳回整改与重提证据"
-  default_prompt: "Use $publishing-harmonyos-appgallery-skill to prepare, verify, or remediate a HarmonyOS AppGallery release, including exact package selection, listing assets, privacy/compliance fields, audit reports, and submission or resubmission gates."
+  display_name: "HarmonyOS AppGallery 发布与整改"
+  short_description: "核验签名包、商店资料、合规门禁、审核整改与重提证据"
+  default_prompt: "Use $publishing-harmonyos-appgallery-skill to prepare or diagnose a HarmonyOS AppGallery Connect release, verify the exact signed APP and persisted store metadata, and stop at every external-action authorization gate."
 policy:
   allow_implicit_invocation: true

@@ -1,13 +1,15 @@
 ---
 name: publishing-harmonyos-appgallery-skill
-description: Use when a HarmonyOS AppGallery release involves signing, APP verification, listing fields or assets, privacy/compliance forms, package upload or selection, self-check, review submission, an audit report, review rejection remediation, resubmission, or listing-state verification.
+description: Prepare, verify, operate, and troubleshoot evidence-driven HarmonyOS and HarmonyOS NEXT releases in AppGallery Connect. Use when work involves application setup, release signing, project-level APP builds, signed `.app` verification, localized store metadata or assets, privacy/compliance/copyright/filing forms, package upload or selection, upper-store self-check, review submission, audit reports, rejection remediation, resubmission, or review/listing-state verification.
 ---
 
 # Publishing HarmonyOS on AppGallery
 
 ## Overview
 
-Build one evidence chain from an accepted commit to a verified signed `.app`, complete persisted store metadata, the matching portal record, and an explicitly authorized submission. Current files and current portal state are evidence; memory and a successful click are not.
+Build one evidence chain from an accepted commit to a verified signed `.app`, complete persisted AppGallery metadata, the matching portal record, and an explicitly authorized submission or resubmission. Use the same chain to diagnose review failures and verify later review or listing states. Current files, artifact bytes, and current portal records are evidence; memory and a successful click are not.
+
+Treat application creation, signing-resource changes, upload, self-check, portal edits, review submission, withdrawal, and manual release as separate external actions. Read and diagnose without mutating by default; perform only the actions the user has explicitly authorized.
 
 ## Required resources
 

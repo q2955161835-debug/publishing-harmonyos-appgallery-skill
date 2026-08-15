@@ -1,0 +1,24 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# HarmonyOS signing material and release artifacts
+*.p12
+*.p7b
+*.cer
+*.csr
+*.jks
+*.keystore
+*.pem
+*.key
+*.app
+*.hap
+
+# Local diagnostics and editor state
+*.log
+try/
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

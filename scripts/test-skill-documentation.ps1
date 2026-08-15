@@ -4,6 +4,9 @@ param()
 $ErrorActionPreference = 'Stop'
 $skillRoot = Split-Path -Parent $PSScriptRoot
 $skillPath = Join-Path $skillRoot 'SKILL.md'
+$agentConfigPath = Join-Path $skillRoot 'agents\openai.yaml'
+$agentsPath = Join-Path $skillRoot 'AGENTS.md'
+$gitignorePath = Join-Path $skillRoot '.gitignore'
 $workflowPath = Join-Path $skillRoot 'references\release-workflow.md'
 $checklistPath = Join-Path $skillRoot 'references\appgallery-form-checklist.md'
 $troubleshootingPath = Join-Path $skillRoot 'references\troubleshooting.md'
@@ -31,9 +34,24 @@ function Assert-FileContains {
 }
 
 Assert-FileContains -Path $skillPath -Pattern '(?m)^name: publishing-harmonyos-appgallery-skill\r?$' -Description 'stable Skill name'
-Assert-FileContains -Path $skillPath -Pattern '(?m)^description: Use when ' -Description 'trigger-only description'
+Assert-FileContains -Path $skillPath -Pattern '(?m)^description: .*HarmonyOS.*AppGallery Connect' -Description 'product and platform discovery description'
+Assert-FileContains -Path $skillPath -Pattern '(?m)^description: .*signed `\.app` verification' -Description 'signed APP verification trigger'
+Assert-FileContains -Path $skillPath -Pattern '(?m)^description: .*localized store metadata or assets' -Description 'listing metadata and asset trigger'
+Assert-FileContains -Path $skillPath -Pattern '(?m)^description: .*privacy/compliance/copyright/filing forms' -Description 'compliance trigger coverage'
+Assert-FileContains -Path $skillPath -Pattern '(?m)^description: .*rejection remediation.*listing-state verification' -Description 'review remediation and state triggers'
 Assert-FileContains -Path $skillPath -Pattern 'appgallery-form-checklist\.md' -Description 'main Skill link to the field checklist'
 Assert-FileContains -Path $skillPath -Pattern 'audit report|review rejection|审核报告|审核驳回|审核未通过' -Description 'review rejection trigger'
+Assert-FileContains -Path $skillPath -Pattern 'separate external actions' -Description 'external action authorization boundary'
+
+Assert-FileContains -Path $agentConfigPath -Pattern 'display_name: "HarmonyOS AppGallery 发布与整改"' -Description 'user-facing Skill name'
+Assert-FileContains -Path $agentConfigPath -Pattern 'short_description: ".*签名包.*商店资料.*审核整改' -Description 'user-facing Skill summary'
+Assert-FileContains -Path $agentConfigPath -Pattern 'default_prompt: "Use \$publishing-harmonyos-appgallery-skill .*authorization gate\."' -Description 'default invocation prompt'
+
+Assert-FileContains -Path $agentsPath -Pattern 'https://github\.com/q2955161835-debug/publishing-harmonyos-appgallery-skill' -Description 'public repository maintenance entry'
+Assert-FileContains -Path $agentsPath -Pattern 'test-skill-documentation\.ps1' -Description 'project validation command entry'
+Assert-FileContains -Path $gitignorePath -Pattern '(?m)^\.env\r?$' -Description 'local environment exclusion'
+Assert-FileContains -Path $gitignorePath -Pattern '(?m)^\*\.p12\r?$' -Description 'signing keystore exclusion'
+Assert-FileContains -Path $gitignorePath -Pattern '(?m)^\*\.app\r?$' -Description 'release artifact exclusion'
 
 Assert-FileContains -Path $workflowPath -Pattern '每种语言' -Description 'localization loop'
 Assert-FileContains -Path $workflowPath -Pattern '素材设备组' -Description 'device-group asset loop'
