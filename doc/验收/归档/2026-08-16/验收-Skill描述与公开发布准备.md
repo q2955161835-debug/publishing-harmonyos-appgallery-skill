@@ -24,6 +24,7 @@
 | 自动化回归 | 运行文档契约、Skill 校验、PowerShell Parser 和空白检查 | 全部退出码为 0 | 通过 |
 | 官方来源可达性 | 并发读取文档内华为官方 URL | 所有当前引用均返回成功状态 | 通过，24/24 返回 HTTP 200 |
 | GitHub 发布读回 | 比较本地 SHA、`git ls-remote`、GitHub API、仓库元数据和远端文件树 | 三方 SHA 一致；仓库为 Public；默认分支、简介和描述文件均正确 | 通过，首轮内容 SHA 均为 `a7cafa41017b1cf42c8fe8eeb7276b17caeaf5ce` |
+| GitHub README 读回 | 查询 GitHub `/readme` 接口并解码远端内容 | 仓库首页选择 `README.md`，标题和本地内容一致，远端 SHA 与本地一致 | 通过，README 发布 SHA 为 `a2fca84b0f9b8d33bbdfcb27e85b99d61232b832` |
 
 ### 测试命令
 
@@ -44,4 +45,4 @@ git diff --check
 
 ### 最终结论
 
-`通过`。完整 Skill 内容通过独立 L3 验收，补充 README 通过独立 L1 验收，均未发现 P0–P3 问题；最终推送后仍需读回远端 README 与主分支 SHA。
+`通过`。完整 Skill 内容通过独立 L3 验收，补充 README 通过独立 L1 验收，均未发现 P0–P3 问题；GitHub `/readme` 接口已确认仓库首页选择 `README.md`，本地、`git ls-remote` 与 GitHub API 的 README 发布 SHA 一致。
