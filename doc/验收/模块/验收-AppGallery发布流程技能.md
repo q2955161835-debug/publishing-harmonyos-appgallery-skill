@@ -5,6 +5,7 @@
 | 功能 | 场景 | 等级 | 验收方法 | 预期结果 |
 | --- | --- | --- | --- | --- |
 | 技能发现与资源路由 | 触发素材、隐私、版权、备案或提交任务 | L1 | 检查 frontmatter、必读引用和代理提示 | 能发现技能并读取完整字段清单 |
+| 公开分发元数据 | GitHub 发布与 Codex 界面展示 | L1 | 检查 `SKILL.md`、`agents/openai.yaml`、项目入口和忽略规则 | 能准确触发，界面摘要一致，公开提交不含本机敏感产物 |
 | 发布证据链 | 从已验收源码到签名 APP、平台记录和状态 | L3 | 核对命令、产物身份、合法性、自检和状态语义 | 每一阶段有独立证据，不提前宣称上架 |
 | 应用信息与素材 | 多语言、手机/平板等设备组、图标和截图 | L3 | 按官方素材规格和保存/重载门禁逐项核对 | 字段、素材和持久化证据完整 |
 | 隐私与合规 | 权限说明、政策/权利入口、隐私标签、AI、版权、备案 | L3 | 用包/代码/地区/业务事实映射门户字段 | 适用项为 PASS，不适用项有可验证理由 |
@@ -17,8 +18,16 @@
 ### 素材或合规任务触发
 
 - 验证步骤：检查 `SKILL.md` frontmatter 是否仅描述触发条件，并覆盖签名、图标、截图、本地化、隐私、分级、版权、备案、上传、自检和提交。
-- 预期结果：description 以 `Use when` 开头；主入口要求完整读取发布流程与字段清单，故障时读取排障文档。
+- 预期结果：description 同时说明能力与 `Use when` 触发场景；主入口要求完整读取发布流程与字段清单，故障时读取排障文档。
 - 验证命令：`pwsh -NoProfile -File .\scripts\test-skill-documentation.ps1`。
+
+## 公开分发元数据
+
+### GitHub 与 Codex 展示一致性
+
+- 验证步骤：检查 frontmatter `description` 是否同时说明能力和具体触发场景；核对 `agents/openai.yaml` 的展示名、25–64 字符短描述和显式包含 `$publishing-harmonyos-appgallery-skill` 的默认提示；检查项目 `AGENTS.md` 与 `.gitignore`。
+- 预期结果：HarmonyOS/HarmonyOS NEXT、AppGallery Connect、签名 APP、商店资料、隐私合规、审核整改和状态验证均可触发；项目入口指向真实资源与验证命令；真实 `.env`、签名材料和 `.app`/`.hap` 不被跟踪。
+- 验证命令：`pwsh -NoProfile -File .\scripts\test-skill-documentation.ps1`；`python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .`；`git diff --check`。
 
 ## 发布证据链
 
@@ -89,4 +98,4 @@
 - 预期结果：关键字段与官方链接存在，无空白错误，全部脚本可解析。
 - 验证命令：`pwsh -NoProfile -File .\scripts\test-skill-documentation.ps1`；`git diff --check`；PowerShell Parser 遍历 `scripts/*.ps1`。
 
-最近验收：2026-08-11，独立子 Agent L3 复验结论为 `通过`。
+最近验收：2026-08-16，独立子 Agent 对描述完善与公开发布准备执行 L3 验收，结论为 `通过`。
