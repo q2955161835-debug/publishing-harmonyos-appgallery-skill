@@ -5,7 +5,7 @@
 | 功能 | 场景 | 等级 | 验收方法 | 预期结果 |
 | --- | --- | --- | --- | --- |
 | 技能发现与资源路由 | 触发素材、隐私、版权、备案或提交任务 | L1 | 检查 frontmatter、必读引用和代理提示 | 能发现技能并读取完整字段清单 |
-| 公开分发元数据 | GitHub 发布与 Codex 界面展示 | L1 | 检查 `SKILL.md`、`agents/openai.yaml`、项目入口和忽略规则 | 能准确触发，界面摘要一致，公开提交不含本机敏感产物 |
+| 公开分发说明与元数据 | GitHub 自述页与 Codex 界面展示 | L1 | 检查 `README.md`、`SKILL.md`、`agents/openai.yaml`、项目入口和忽略规则 | 人工读者可安装和调用，Codex 能准确触发，公开提交不含本机敏感产物 |
 | 发布证据链 | 从已验收源码到签名 APP、平台记录和状态 | L3 | 核对命令、产物身份、合法性、自检和状态语义 | 每一阶段有独立证据，不提前宣称上架 |
 | 应用信息与素材 | 多语言、手机/平板等设备组、图标和截图 | L3 | 按官方素材规格和保存/重载门禁逐项核对 | 字段、素材和持久化证据完整 |
 | 隐私与合规 | 权限说明、政策/权利入口、隐私标签、AI、版权、备案 | L3 | 用包/代码/地区/业务事实映射门户字段 | 适用项为 PASS，不适用项有可验证理由 |
@@ -21,12 +21,12 @@
 - 预期结果：description 同时说明能力与 `Use when` 触发场景；主入口要求完整读取发布流程与字段清单，故障时读取排障文档。
 - 验证命令：`pwsh -NoProfile -File .\scripts\test-skill-documentation.ps1`。
 
-## 公开分发元数据
+## 公开分发说明与元数据
 
-### GitHub 与 Codex 展示一致性
+### GitHub README 与 Codex 展示一致性
 
-- 验证步骤：检查 frontmatter `description` 是否同时说明能力和具体触发场景；核对 `agents/openai.yaml` 的展示名、25–64 字符短描述和显式包含 `$publishing-harmonyos-appgallery-skill` 的默认提示；检查项目 `AGENTS.md` 与 `.gitignore`。
-- 预期结果：HarmonyOS/HarmonyOS NEXT、AppGallery Connect、签名 APP、商店资料、隐私合规、审核整改和状态验证均可触发；项目入口指向真实资源与验证命令；真实 `.env`、签名材料和 `.app`/`.hap` 不被跟踪。
+- 验证步骤：检查 `README.md` 的用途、适用场景、安装、调用示例、资源导航、安全边界、验证命令和许可证；检查 frontmatter `description` 是否同时说明能力和具体触发场景；核对 `agents/openai.yaml` 的展示名、25–64 字符短描述和显式包含 `$publishing-harmonyos-appgallery-skill` 的默认提示；检查项目 `AGENTS.md` 与 `.gitignore`。
+- 预期结果：GitHub 首页能直接说明如何安装和使用；HarmonyOS/HarmonyOS NEXT、AppGallery Connect、签名 APP、商店资料、隐私合规、审核整改和状态验证均可触发；项目入口指向真实资源与验证命令；真实 `.env`、签名材料和 `.app`/`.hap` 不被跟踪。
 - 验证命令：`pwsh -NoProfile -File .\scripts\test-skill-documentation.ps1`；`python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .`；`git diff --check`。
 
 ## 发布证据链

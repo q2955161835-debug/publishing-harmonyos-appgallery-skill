@@ -3,6 +3,7 @@ param()
 
 $ErrorActionPreference = 'Stop'
 $skillRoot = Split-Path -Parent $PSScriptRoot
+$readmePath = Join-Path $skillRoot 'README.md'
 $skillPath = Join-Path $skillRoot 'SKILL.md'
 $agentConfigPath = Join-Path $skillRoot 'agents\openai.yaml'
 $agentsPath = Join-Path $skillRoot 'AGENTS.md'
@@ -42,6 +43,17 @@ Assert-FileContains -Path $skillPath -Pattern '(?m)^description: .*rejection rem
 Assert-FileContains -Path $skillPath -Pattern 'appgallery-form-checklist\.md' -Description 'main Skill link to the field checklist'
 Assert-FileContains -Path $skillPath -Pattern 'audit report|review rejection|审核报告|审核驳回|审核未通过' -Description 'review rejection trigger'
 Assert-FileContains -Path $skillPath -Pattern 'separate external actions' -Description 'external action authorization boundary'
+
+Assert-FileContains -Path $readmePath -Pattern '(?m)^# HarmonyOS AppGallery 发布与审核整改 Skill\r?$' -Description 'GitHub README title'
+Assert-FileContains -Path $readmePath -Pattern '(?m)^## 安装\r?$' -Description 'README installation section'
+Assert-FileContains -Path $readmePath -Pattern '\$publishing-harmonyos-appgallery-skill' -Description 'README invocation example'
+Assert-FileContains -Path $readmePath -Pattern '\[SKILL\.md\]\(SKILL\.md\)' -Description 'README main Skill link'
+Assert-FileContains -Path $readmePath -Pattern 'references/release-workflow\.md' -Description 'README release workflow link'
+Assert-FileContains -Path $readmePath -Pattern 'references/appgallery-form-checklist\.md' -Description 'README field checklist link'
+Assert-FileContains -Path $readmePath -Pattern 'references/troubleshooting\.md' -Description 'README troubleshooting link'
+Assert-FileContains -Path $readmePath -Pattern '密码.*私钥.*证书.*Profile' -Description 'README secret boundary'
+Assert-FileContains -Path $readmePath -Pattern '提交审核.*撤销审核.*手动发布' -Description 'README external action boundary'
+Assert-FileContains -Path $readmePath -Pattern 'MIT License' -Description 'README license link'
 
 Assert-FileContains -Path $agentConfigPath -Pattern 'display_name: "HarmonyOS AppGallery 发布与整改"' -Description 'user-facing Skill name'
 Assert-FileContains -Path $agentConfigPath -Pattern 'short_description: ".*签名包.*商店资料.*审核整改' -Description 'user-facing Skill summary'

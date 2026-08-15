@@ -6,7 +6,8 @@
 
 ## 关键入口与目录职责
 
-- `SKILL.md`：Skill 的触发描述、核心门禁、主流程和交付契约，也是公开分发的主描述文件。
+- `README.md`：GitHub 面向人的项目介绍、安装、使用、安全边界和验证入口。
+- `SKILL.md`：Codex 的触发描述、核心门禁、主流程和交付契约。
 - `agents/openai.yaml`：Codex 界面名称、短描述和默认调用提示。
 - `references/release-workflow.md`：完整发布、提交、状态验证和驳回整改流程。
 - `references/appgallery-form-checklist.md`：应用信息、素材、隐私、合规和版本字段清单。
@@ -34,6 +35,7 @@ PowerShell 脚本语法检查使用 `System.Management.Automation.Language.Parse
 ## 验收标准
 
 - frontmatter `description` 同时说明 Skill 能力与具体触发场景，`agents/openai.yaml` 与其一致。
+- `README.md` 能让未加载 Skill 的读者理解用途、安装方式、调用示例、安全边界和验证命令。
 - `SKILL.md` 直接路由到完整流程、字段清单、排障文档和验包脚本。
 - 文档契约测试、Skill 结构校验、PowerShell Parser 与 `git diff --check` 全部通过。
 - 公开提交不含敏感材料、真实发布包、临时调试产物或本机专属配置。
